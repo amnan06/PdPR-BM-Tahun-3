@@ -276,6 +276,14 @@ $("duo").innerHTML=car("#e5484d")+car("#3b82e6");
 var Q=[],qi=0,score=0,pp=0,cp=0,t0=0,tmr=null,lock=false,ctx=null,mus=false,mi=null;
 
 function beep(f,d,ty){try{ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();var o=ctx.createOscillator(),g=ctx.createGain();o.type=ty||"sine";o.frequency.value=f;g.gain.value=.08;o.connect(g);g.connect(ctx.destination);o.start();g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+d);o.stop(ctx.currentTime+d)}catch(e){}}
+function clap(){try{ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();if(ctx.state==="suspended")ctx.resume();
+  var sr=ctx.sampleRate,len=Math.floor(sr*.12),buf=ctx.createBuffer(1,len,sr),d=buf.getChannelData(0),i,j,n=12,t=ctx.currentTime;
+  for(i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,2);
+  for(j=0;j<n;j++){var at=t+j*.08+Math.random()*.05,s=ctx.createBufferSource(),f=ctx.createBiquadFilter(),g=ctx.createGain();
+    s.buffer=buf;f.type="bandpass";f.frequency.value=1200+Math.random()*1800;f.Q.value=.8;
+    g.gain.setValueAtTime(0,at);g.gain.linearRampToValueAtTime((.35+Math.random()*.25)*(1-j/n*.5),at+.004);g.gain.exponentialRampToValueAtTime(.001,at+.11);
+    s.connect(f);f.connect(g);g.connect(ctx.destination);s.start(at)}
+}catch(e){}}
 var notes=[523,659,784,659,587,698,880,698],ni=0;
 $("mbtn").onclick=function(){mus=!mus;this.setAttribute("aria-pressed",mus);this.textContent=mus?"🔇 Matikan Muzik":"🎵 Pasang Muzik";clearInterval(mi);if(mus)mi=setInterval(function(){beep(notes[ni++%8],.25,"triangle")},320)};
 $("col").onchange=function(){$("duo").innerHTML=car(this.value)+car(this.value==="#3b82e6"?"#f59e0b":"#3b82e6")};
@@ -306,7 +314,7 @@ function ask(){
 function pick(b,w){
   if(lock)return;lock=true;var q=Q[qi],ok=w===q.a;
   [].forEach.call($("opts").children,function(x){if(x.textContent===q.a)x.classList.add("ok");else x.classList.add("no")});
-  if(ok){score++;pp+=5;beep(880,.2);beep(1320,.3);$("fb").textContent="✅ Betul! Kereta memecut!"}
+  if(ok){score++;pp+=5;clap();$("fb").textContent="✅ Betul! Kereta memecut!"}
   else{beep(200,.4,"sawtooth");$("fb").textContent="❌ Jawapan yang betul ialah “"+q.a+"”. Ingat: "+HINT[q.a];try{$("fb").scrollIntoView({block:"nearest"})}catch(e){}}
   cp+=5*(.6+Math.random()*.3);place();$("sc").textContent="⭐ "+score;
   setTimeout(function(){qi++;if(qi<20)ask();else finish()},ok?950:2400);
