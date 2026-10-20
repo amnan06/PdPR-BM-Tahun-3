@@ -82,8 +82,8 @@ table{width:100%;border-collapse:collapse;color:var(--ink);font-size:.95rem}
 th,td{padding:6px 8px;border-bottom:2px solid var(--edge);text-align:left}
 @media (max-width:760px){.trio{grid-template-columns:1fr}.duo{order:-1}}
 @media (prefers-reduced-motion:reduce){.car{transition:none}}
-#cert img{display:block;width:100%;max-width:720px;margin:16px auto;border-radius:18px;box-shadow:0 7px 0 var(--shade)}
-@page{size:A4 landscape;margin:0}@media print{html,body{background:#fff!important;min-height:0!important;height:auto!important}.scene,.bar,#home,#game,#dash,#pw,#end>:not(#cert){display:none!important}main{padding:0;max-width:none;margin:0}#cert{display:block;width:297mm;height:210mm;margin:0;overflow:hidden}#cert img{display:block;width:297mm;height:210mm;max-width:none;margin:0;border-radius:0;box-shadow:none}}
+#cert img{display:block;width:100%;max-width:1000px;aspect-ratio:297/210;height:auto;margin:16px auto;border-radius:18px;box-shadow:0 7px 0 var(--shade)}
+@page{size:297mm 210mm;margin:0}@media print{html,body{background:#fff!important;margin:0!important;padding:0!important;min-height:0!important;height:auto!important}:root{padding:0!important}.scene,.bar,#home,#game,#dash,#rank,#pw,#end>:not(#cert){display:none!important}main{padding:0;margin:0;max-width:none}#cert{position:fixed;left:0;top:0;width:297mm;height:210mm;margin:0;overflow:hidden}#cert img{display:block;width:297mm;height:210mm;max-width:none;margin:0;border-radius:0;box-shadow:none}}
 html{-webkit-text-size-adjust:100%}
 body{min-height:100vh;min-height:100dvh}
 button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
@@ -143,6 +143,14 @@ h1 .a,h1 .b{-webkit-text-stroke-width:2px}
 .car{width:76px}
 .sent{font-size:1.4rem;margin:8px 0 10px}.pic{font-size:2.2rem;margin-top:6px}.ans{padding:10px 4px}
 }
+.rtbl{overflow-x:auto;padding:10px 16px}
+.rtbl th:first-child,.rtbl td:first-child{text-align:center;width:3.2em}
+.rtbl tr.me td{background:#ffe9a8;color:#5a3300}
+@media (max-width:600px){
+.tools{display:grid;grid-template-columns:1fr 1fr}
+.tools #rbtn{grid-column:1/-1}
+.rtbl{padding:6px 8px}.rtbl table{font-size:.85rem}.rtbl th,.rtbl td{padding:5px 4px}
+}
 </style>
 </head>
 <body>
@@ -154,7 +162,7 @@ h1 .a,h1 .b{-webkit-text-stroke-width:2px}
 <main>
 <div class="bar">
   <span class="pill badge"><i>📘</i>BAHASA MELAYU TAHUN 3</span>
-  <span class="tools"><button class="btn pink" id="mbtn" aria-pressed="false">🎵 Pasang Muzik</button><button class="btn blue" id="dbtn">📊 Dashboard Guru</button></span>
+  <span class="tools"><button class="btn pink" id="mbtn" aria-pressed="false">🎵 Pasang Muzik</button><button class="btn green" id="rbtn">🏆 Dashboard Ranking</button><button class="btn blue" id="dbtn">📊 Dashboard Guru</button></span>
 </div>
 
 <section id="home">
@@ -206,9 +214,17 @@ h1 .a,h1 .b{-webkit-text-stroke-width:2px}
 <section id="end" class="hide">
   <h1 style="font-size:clamp(2rem,8vw,3.6rem)"><span class="a" id="res">🏆 TAHNIAH!</span></h1>
   <p class="sub" id="sum"></p>
+  <p class="sub hide" id="myrank" style="font-size:1.1rem"></p>
   <div id="cert"><img id="certimg" alt="Sijil penyertaan"></div>
   <p class="small" id="msg"></p>
-  <div class="row"><button class="btn green hide" id="save">🎓 Simpan Sijil</button><button class="btn pink" id="print">🖨️ Cetak</button><button class="btn blue" id="again">🔁 Main Semula</button></div>
+  <div class="row"><button class="btn green" id="save">🎓 Simpan Sijil</button><button class="btn green" id="rk2">🏆 Lihat Ranking</button><button class="btn pink" id="print">🖨️ Cetak</button><button class="btn blue" id="again">🔁 Main Semula</button></div>
+</section>
+
+<section id="rank" class="hide">
+  <h1 style="font-size:clamp(2rem,8vw,3.4rem)"><span class="a">🏆 RANKING MURID</span></h1>
+  <p class="sub" id="rnote" style="font-size:1rem"></p>
+  <div class="panel rtbl"><table><thead><tr><th>No.</th><th>Nama</th><th>Kelas</th><th>Markah</th><th>Masa</th></tr></thead><tbody id="rrows"></tbody></table></div>
+  <div class="row"><button class="btn pink" id="rrf">🔄 Muat Semula</button><button class="btn blue" id="rback">🏠 Halaman Utama</button></div>
 </section>
 
 <section id="dash" class="hide">
@@ -249,7 +265,7 @@ var D=[
 {s:"Adik makan dua ___ kek.",e:E("🍰",2),l:2,a:"potong",o:["potong","batang","orang"]}];
 var HINT={sebentuk:"bentuk untuk cincin.",sebiji:"biji untuk buah-buahan yang bulat seperti durian dan epal.",sepasang:"pasang untuk benda yang berpasangan, seperti kasut dan cermin mata.",seikat:"ikat untuk benda yang diikat, seperti pisang dan sayur.",ekor:"ekor untuk haiwan.",sekaki:"kaki untuk payung.",sekuntum:"kuntum untuk bunga.",sebilah:"bilah untuk benda yang tajam seperti pisau.",sebuah:"buah untuk benda besar seperti kereta dan rumah.",sesisir:"sisir untuk pisang.",buah:"buah untuk benda besar seperti buku, rumah dan kereta.",naskah:"naskah untuk surat khabar dan majalah.",orang:"orang untuk manusia.",batang:"batang untuk benda panjang dan keras seperti pensel.",biji:"biji untuk buah-buahan yang bulat seperti epal.",keping:"keping untuk benda nipis dan rata seperti roti.",helai:"helai untuk benda nipis dan lebar seperti kain dan kertas.",pucuk:"pucuk untuk surat.",utas:"utas untuk benda panjang dan lentur seperti tali dan benang.",potong:"potong untuk makanan yang dipotong, seperti kek."};
 var $=function(i){return document.getElementById(i)};
-var S=["home","game","end","dash"];
+var S=["home","game","end","dash","rank"];
 function show(n){if(n!=="dash")unlocked=false;S.forEach(function(s){$(s).classList.toggle("hide",s!==n)});window.scrollTo(0,0)}
 function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
 function car(c){return '<svg viewBox="0 0 120 58" aria-hidden="true"><path d="M6 38 Q6 28 18 26 L34 24 Q44 6 64 6 L84 6 Q96 8 102 24 L110 28 Q117 31 117 40 L117 44 L6 44Z" fill="'+c+'"/><path d="M42 24 Q49 11 64 11 L71 11 L71 24Z" fill="#cfefff"/><path d="M75 11 L84 11 Q91 13 95 24 L75 24Z" fill="#cfefff"/><rect x="30" y="33" width="42" height="4" rx="2" fill="#fff" opacity=".65"/><circle cx="32" cy="46" r="10" fill="#1b1b24"/><circle cx="32" cy="46" r="4" fill="#ddd"/><circle cx="92" cy="46" r="10" fill="#1b1b24"/><circle cx="92" cy="46" r="4" fill="#ddd"/><rect x="109" y="31" width="8" height="6" rx="3" fill="#ffe66d"/></svg>'}
@@ -302,17 +318,17 @@ function finish(){
   var rec={id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),n:n,k:k,d:d,m:score,t:fmt(sec),h:win?"Menang":"Kalah"};
   var r=load();r.push(rec);
   try{localStorage.setItem("lkkp",JSON.stringify(r))}catch(e){}
-  if(API){var q=qload();q.push(rec);qsave(q);flush()}
-  show("end");[523,659,784,1047].forEach(function(f,i){setTimeout(function(){beep(f,.3)},i*180)});
+  if(API){var q=qload();q.push(rec);qsave(q)}
+  myRank();show("end");[523,659,784,1047].forEach(function(f,i){setTimeout(function(){beep(f,.3)},i*180)});
 }
 function load(){try{return JSON.parse(localStorage.getItem("lkkp")||"[]")}catch(e){return[]}}
 $("again").onclick=function(){show("home")};
-$("print").onclick=function(){$("msg").textContent="Jika tetingkap cetak tidak dibuka, gunakan Simpan Sijil atau tangkap skrin sijil.";try{window.print()}catch(e){}};
+$("print").onclick=function(){$("msg").textContent="Pilih kertas A4 (landskap). Jika tidak boleh cetak, tekan Simpan Sijil.";try{window.print()}catch(e){}};
 var dl=null;try{if(window.claude&&window.claude.use)window.claude.use("downloads").then(function(d){dl=d;if(d)$("save").classList.remove("hide")}).catch(function(){})}catch(e){}
-$("save").onclick=function(){if(!dl)return;cv.toBlob(function(b){if(!b){$("msg").textContent="Sijil tidak dapat disimpan. Sila tangkap skrin sijil.";return}dl.save({filename:"sijil-penjodoh-bilangan.png",data:b}).then(function(){$("msg").textContent="Sijil sudah disimpan. ✅"}).catch(function(e){$("msg").textContent=(e&&e.code==="declined")?"Simpanan dibatalkan.":"Sijil tidak dapat disimpan. Sila tangkap skrin sijil."})},"image/png")};
-var cv=document.createElement("canvas");cv.width=1200;cv.height=849;
-function drawCert(n,k,d){var c=cv.getContext("2d"),W=1200,H=849,F='"Baloo 2","Trebuchet MS",sans-serif';
- c.fillStyle="#fffdf2";c.fillRect(0,0,W,H);
+$("save").onclick=function(){if(!dl){cv.toBlob(function(b){if(!b)return;var a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="sijil-penjodoh-bilangan.png";document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href)},2000)},"image/png");return}cv.toBlob(function(b){if(!b){$("msg").textContent="Sijil tidak dapat disimpan. Sila tangkap skrin sijil.";return}dl.save({filename:"sijil-penjodoh-bilangan.png",data:b}).then(function(){$("msg").textContent="Sijil sudah disimpan. ✅"}).catch(function(e){$("msg").textContent=(e&&e.code==="declined")?"Simpanan dibatalkan.":"Sijil tidak dapat disimpan. Sila tangkap skrin sijil."})},"image/png")};
+var cv=document.createElement("canvas");cv.width=2339;cv.height=1654;
+function drawCert(n,k,d){var c=cv.getContext("2d"),K=2339/1200,W=1200,H=1654/K,F='"Baloo 2","Trebuchet MS",sans-serif';
+ c.setTransform(K,0,0,K,0,0);c.fillStyle="#fffdf2";c.fillRect(0,0,W,H);
  c.strokeStyle="#e0a63a";c.lineWidth=14;c.strokeRect(30,30,W-60,H-60);c.lineWidth=4;c.strokeRect(54,54,W-108,H-108);
  c.textAlign="center";c.fillStyle="#7a3c00";
  c.font="64px "+F;c.fillText("🏎️ 🏁 🚙",W/2,150);
@@ -330,8 +346,8 @@ $("back").onclick=function(){show("home")};
 var PW="1234",unlocked=false,key="",view=[],LB=["Nama","Kelas","Tarikh","Markah","Masa","Keputusan"];
 function qload(){try{return JSON.parse(localStorage.getItem("lkkq")||"[]")}catch(e){return[]}}
 function qsave(a){try{localStorage.setItem("lkkq",JSON.stringify(a))}catch(e){}}
-function flush(){if(!API||!window.fetch)return;var q=qload();if(!q.length)return;qsave([]);
-  q.forEach(function(x){fetch(API,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(x)}).catch(function(){var a=qload();a.push(x);qsave(a)})})}
+function flush(){if(!API||!window.fetch)return Promise.resolve();var q=qload();if(!q.length)return Promise.resolve();qsave([]);
+  return Promise.all(q.map(function(x){return fetch(API,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(x)}).catch(function(){var a=qload();a.push(x);qsave(a)})}))}
 function openPw(){$("pwe").textContent="";$("pwi").value="";$("pw").classList.remove("hide");$("pwi").focus()}
 function closePw(){$("pw").classList.add("hide")}
 function soft(m){$("dnote").textContent=m}
@@ -358,6 +374,40 @@ $("pwok").onclick=function(){var v=$("pwi").value;
   else if(v===PW){closePw();loadDash(v)}
   else bad("Kata laluan salah. Cuba lagi.")};
 $("pwi").onkeydown=function(e){if(e.key==="Enter")$("pwok").click();else if(e.key==="Escape")closePw()};
+function secs(t){var a=String(t).split(":");return(+a[0]||0)*60+(+a[1]||0)}
+function mykey(){return $("nm").value.trim().toLowerCase()+"|"+$("kl").value.trim().toLowerCase()}
+function buildRank(rows){
+  var best={};
+  rows.forEach(function(x){var k=String(x.n).trim().toLowerCase()+"|"+String(x.k).trim().toLowerCase(),m=+x.m||0,t=secs(x.t),b=best[k];
+    if(!b||m>b.m||(m===b.m&&t<b.s))best[k]={id:k,n:x.n,k:x.k,m:m,t:x.t,s:t}});
+  var a=Object.keys(best).map(function(k){return best[k]});
+  a.sort(function(p,q){return q.m-p.m||p.s-q.s});
+  var r=0;a.forEach(function(x,i){var p=a[i-1];r=(p&&p.m===x.m&&p.s===x.s)?r:i+1;x.r=r});
+  return a;
+}
+function rankRows(){
+  if(!API)return Promise.resolve(load());
+  return fetch(API+(API.indexOf("?")<0?"?":"&")+"a=rank&t="+Date.now()).then(function(r){return r.json()}).then(function(j){if(!j||!j.ok)throw 0;return j.rows});
+}
+function showRank(){
+  $("rnote").textContent="Memuatkan…";show("rank");
+  rankRows().then(function(rows){
+    var a=buildRank(rows),me=mykey(),b=$("rrows");b.innerHTML="";
+    $("rnote").textContent=(API?"Semua murid":"Peranti ini sahaja")+" • "+a.length+" murid • Markah tertinggi, kemudian paling pantas";
+    if(!a.length){var tr=document.createElement("tr"),td=document.createElement("td");td.colSpan=5;td.textContent="Belum ada rekod. Jadilah murid pertama!";tr.appendChild(td);b.appendChild(tr)}
+    a.forEach(function(x){var tr=document.createElement("tr");if(x.id===me)tr.className="me";
+      [x.r<=3?["🥇","🥈","🥉"][x.r-1]:x.r,x.n,x.k,x.m+"/20",x.t].forEach(function(v){var td=document.createElement("td");td.textContent=v;tr.appendChild(td)});b.appendChild(tr)});
+  }).catch(function(){$("rnote").textContent="Tidak dapat memuatkan ranking. Semak internet."});
+}
+function myRank(){
+  var el=$("myrank");el.classList.add("hide");
+  flush().then(rankRows).then(function(rows){
+    var a=buildRank(rows),me=mykey(),x=a.filter(function(y){return y.id===me})[0];
+    if(!x)return;
+    el.textContent="🏅 Kedudukan terbaik kamu: No. "+x.r+" daripada "+a.length+" murid";el.classList.remove("hide");
+  }).catch(function(){});
+}
+$("rbtn").onclick=showRank;$("rk2").onclick=showRank;$("rrf").onclick=showRank;$("rback").onclick=function(){show("home")};
 $("csv").onclick=function(){
   var c="Nama,Kelas,Tarikh,Markah,Masa,Keputusan\n"+view.map(function(x){return[x.n,x.k,x.d,x.m,x.t,x.h].map(function(v){return'"'+String(v).replace(/"/g,'""')+'"'}).join(",")}).join("\n");
   try{var a=document.createElement("a");a.href="data:text/csv;charset=utf-8,"+encodeURIComponent("\ufeff"+c);a.download="rekod-lumba-kereta.csv";a.click()}catch(e){}
