@@ -84,6 +84,64 @@ th,td{padding:6px 8px;border-bottom:2px solid var(--edge);text-align:left}
 @media (prefers-reduced-motion:reduce){.car{transition:none}}
 #cert img{display:block;width:100%;max-width:720px;margin:16px auto;border-radius:18px;box-shadow:0 7px 0 var(--shade)}
 @media print{#cert img{max-width:none;margin:0;box-shadow:none;border-radius:0}body *{visibility:hidden}.scene{display:none}#cert,#cert *{visibility:visible}#cert{position:absolute;left:0;top:0;width:100%;margin:0}}
+html{-webkit-text-size-adjust:100%}
+body{min-height:100vh;min-height:100dvh}
+button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.tools{display:flex;gap:12px;flex-wrap:wrap}
+@media (max-width:760px){.center{order:-2}.vs{order:-1}}
+@media (max-width:600px){
+main{padding:10px}
+.bar{gap:8px}
+.badge{font-size:.95rem}
+.badge i{width:36px;height:36px;font-size:1.15rem}
+.pill{border-width:3px;padding:4px 12px;font-size:.95rem;box-shadow:0 4px 0 var(--shade)}
+.tools{width:100%;gap:8px}
+.tools .btn{flex:1 1 0;padding:8px 6px;font-size:.9rem;white-space:nowrap}
+.btn{border-width:3px;box-shadow:0 4px 0 var(--shade)}
+h1{margin:12px 0 4px}
+h1 .a,h1 .b{-webkit-text-stroke-width:2px}
+.banner{padding:6px 18px;border-width:3px}
+.sub{padding:5px 16px;border-width:3px}
+.trio{gap:12px;margin-top:14px}
+.panel{border-width:4px;border-radius:22px;padding:12px 16px;box-shadow:0 5px 0 var(--shade)}
+.panel h2{font-size:1.4rem}
+.panel p{font-size:1rem}
+.vs{font-size:1.25rem;padding:4px 14px;border-width:3px}
+.ready{border-width:5px;border-radius:24px;padding:14px 16px;margin:20px auto}
+.ready h2{font-size:1.45rem}
+.go{font-size:1.4rem;padding:10px;border-width:4px}
+#game .bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#game .pill{display:block;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.track{margin:12px 0;border-width:5px;border-radius:24px;box-shadow:0 5px 0 var(--shade)}
+.sky{height:44px}.sky svg{height:38px}
+.road{height:112px}
+.grass{height:16px}
+.tamat{writing-mode:vertical-rl;left:calc(86% + 22px);top:4px;font-size:.75rem}
+.q{border-width:5px;border-radius:24px;padding:12px 12px 16px;box-shadow:0 5px 0 var(--shade)}
+.q .tag{font-size:1rem}
+.pic{font-size:clamp(2rem,10vw,2.6rem);padding:6px 12px;margin-top:8px}
+.sent{font-size:clamp(1.15rem,5.2vw,1.5rem);line-height:1.25;margin:12px 0 14px}
+.opts{gap:8px}
+.ans{font-size:clamp(.95rem,4.2vw,1.2rem);padding:14px 2px;border-width:4px;border-radius:18px;box-shadow:0 5px 0 rgba(0,0,0,.28);min-width:0;overflow-wrap:anywhere}
+.fb{font-size:1rem;min-height:3.2em;margin-top:10px}
+.row{gap:10px}
+.row .btn{flex:1 1 40%}
+.tbl{padding:6px 12px}
+.tbl table,.tbl tbody{display:block}
+.tbl thead{display:none}
+.tbl tr{display:block;padding:6px 0;border-bottom:2px dashed var(--ink2)}
+.tbl tr:last-child{border-bottom:0}
+.tbl td{display:flex;justify-content:space-between;gap:12px;border:0;padding:2px 2px}
+.tbl td:before{content:attr(data-label);color:var(--ink2)}
+.tbl td:first-child{font-size:1.05rem}
+.tbl td[colspan]:before{content:none}
+}
+@media (max-width:340px){.opts{grid-template-columns:1fr}}
+@media (max-height:480px) and (orientation:landscape){
+.sky{height:36px}.sky svg{height:32px}.road{height:110px}.grass{height:12px}.track{margin:10px 0}
+.car{width:76px}
+.sent{font-size:1.4rem;margin:8px 0 10px}.pic{font-size:2.2rem;margin-top:6px}.ans{padding:10px 4px}
+}
 </style>
 </head>
 <body>
@@ -95,7 +153,7 @@ th,td{padding:6px 8px;border-bottom:2px solid var(--edge);text-align:left}
 <main>
 <div class="bar">
   <span class="pill badge"><i>📘</i>BAHASA MELAYU TAHUN 3</span>
-  <span style="display:flex;gap:12px;flex-wrap:wrap"><button class="btn pink" id="mbtn" aria-pressed="false">🎵 Pasang Muzik</button><button class="btn blue" id="dbtn">📊 Dashboard Guru</button></span>
+  <span class="tools"><button class="btn pink" id="mbtn" aria-pressed="false">🎵 Pasang Muzik</button><button class="btn blue" id="dbtn">📊 Dashboard Guru</button></span>
 </div>
 
 <section id="home">
@@ -216,7 +274,7 @@ $("start").onclick=function(){
 };
 
 function ask(){
-  lock=false;var q=Q[qi];
+  lock=false;if(qi>0)window.scrollTo(0,0);var q=Q[qi];
   $("qn").textContent="Soalan "+(qi+1)+"/20";$("sc").textContent="⭐ "+score;$("fb").textContent="";
   $("tag").textContent=q.l===1?"🌟 LITAR MUDAH":"⭐ LITAR SEDERHANA";$("pic").innerHTML=q.e;$("pic").setAttribute("aria-label","Gambar bagi soalan ini");
   $("sent").innerHTML=q.s.replace("___",'<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>');
@@ -227,7 +285,7 @@ function pick(b,w){
   if(lock)return;lock=true;var q=Q[qi],ok=w===q.a;
   [].forEach.call($("opts").children,function(x){if(x.textContent===q.a)x.classList.add("ok");else x.classList.add("no")});
   if(ok){score++;pp+=5;beep(880,.2);beep(1320,.3);$("fb").textContent="✅ Betul! Kereta memecut!"}
-  else{beep(200,.4,"sawtooth");$("fb").textContent="❌ Jawapan yang betul ialah “"+q.a+"”. Ingat: "+HINT[q.a]}
+  else{beep(200,.4,"sawtooth");$("fb").textContent="❌ Jawapan yang betul ialah “"+q.a+"”. Ingat: "+HINT[q.a];try{$("fb").scrollIntoView({block:"nearest"})}catch(e){}}
   cp+=5*(.6+Math.random()*.3);place();$("sc").textContent="⭐ "+score;
   setTimeout(function(){qi++;if(qi<20)ask();else finish()},ok?950:2400);
 }
@@ -265,7 +323,7 @@ function drawCert(n,k,d){var c=cv.getContext("2d"),W=1200,H=850,F='"Baloo 2","Tr
 $("back").onclick=function(){show("home")};
 $("dbtn").onclick=function(){
   var r=load();$("rows").innerHTML=r.length?"":'<tr><td colspan="6">Belum ada rekod. Selesaikan satu permainan dahulu.</td></tr>';
-  r.slice().reverse().forEach(function(x){var tr=document.createElement("tr");[x.n,x.k,x.d,x.m+"/20",x.t,x.h].forEach(function(v){var td=document.createElement("td");td.textContent=v;tr.appendChild(td)});$("rows").appendChild(tr)});
+  r.slice().reverse().forEach(function(x){var tr=document.createElement("tr");[x.n,x.k,x.d,x.m+"/20",x.t,x.h].forEach(function(v,i){var td=document.createElement("td");td.setAttribute("data-label",["Nama","Kelas","Tarikh","Markah","Masa","Keputusan"][i]);td.textContent=v;tr.appendChild(td)});$("rows").appendChild(tr)});
   show("dash");
 };
 $("csv").onclick=function(){
