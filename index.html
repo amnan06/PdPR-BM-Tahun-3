@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lumba Kereta Penjodoh Bilangan Tahun 3</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--sky1:#3d97ee;--sky2:#a8dcff;--cloud:#fff;--card:#f4f9ff;--ink:#1e4f8f;--ink2:#35527c;--edge:#fff;--shade:#2b6cb0;--hill1:#58b45a;--hill2:#7ccf6e;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--sky1:#10244f;--sky2:#2a4a85;--cloud:#8fa6cf;--card:#1b2a4d;--ink:#cfe4ff;--ink2:#a9c0e6;--edge:#dbe8ff;--shade:#0a1633;--hill1:#2f6b3f;--hill2:#3d8450}}
+*,*:before,*:after{box-sizing:inherit}
+html,body{margin:0;font-family:"Baloo 2","Trebuchet MS",system-ui,sans-serif;font-weight:700;color:var(--ink)}
+body{min-height:100vh;background:var(--sky1)}
+.scene{position:fixed;inset:0;z-index:-1;overflow:hidden;background:linear-gradient(var(--sky1),var(--sky2) 62%,var(--hill2) 62%)}
+.scene .cl{position:absolute;width:120px;height:38px;border-radius:40px;background:var(--cloud);box-shadow:44px -22px 0 12px var(--cloud),92px 2px 0 0 var(--cloud);opacity:.92}
+.scene svg{position:absolute;left:0;bottom:0;width:100%;height:60%}
+.flag{position:absolute;bottom:0;width:7px;height:48%;background:#666}
+.flag:after{content:"";position:absolute;top:6px;width:54px;height:80px;background:repeating-conic-gradient(#111 0 25%,#fff 0 50%) 0 0/27px 27px;border:2px solid #333}
+.flag.l{left:3%}.flag.l:after{left:7px}.flag.r{right:3%}.flag.r:after{right:7px}
+@media (max-width:700px){.flag{display:none}}
+main{max-width:940px;margin:0 auto;padding:14px}
+.hide{display:none!important}
+button,select,input{font:inherit}
+button{cursor:pointer;border:0;color:#fff}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:4px solid #ffd23f;outline-offset:2px}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.pill{background:var(--card);color:var(--ink);border:4px solid var(--edge);border-radius:22px;box-shadow:0 5px 0 var(--shade);padding:6px 16px;font-size:1.05rem;display:inline-flex;align-items:center;gap:8px}
+.badge{font-size:1.1rem;font-weight:800}
+.badge i{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:#ffd23f;border:3px solid #c98a00;font-style:normal;font-size:1.4rem}
+.btn{border-radius:20px;padding:8px 18px;border:4px solid var(--edge);box-shadow:0 5px 0 var(--shade);font-weight:800;font-size:1rem}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 var(--shade)}
+.pink{background:linear-gradient(#ff6eb4,#e0368f)}.blue{background:linear-gradient(#4aa8ff,#2672d6)}.green{background:linear-gradient(#8fe35c,#3fae3a)}
+h1{margin:18px 0 6px;text-align:center;font-weight:800;font-size:clamp(2.6rem,11vw,5.6rem);line-height:.95;letter-spacing:.02em}
+h1 .a{color:#ffd23f;-webkit-text-stroke:3px #c97a00;text-shadow:0 5px 0 #14306b,0 8px 8px rgba(0,0,0,.3)}
+h1 .b{color:#58c0ff;-webkit-text-stroke:3px #1c5fb8;text-shadow:0 5px 0 #14306b,0 8px 8px rgba(0,0,0,.3)}
+.sub{display:block;width:fit-content;max-width:100%;margin:8px auto;text-align:center;background:linear-gradient(#fff0a8,#ffd86a);color:#8a4b12;border:4px solid #fff3c4;border-bottom-color:#e0a63a;border-radius:20px;box-shadow:0 5px 0 #c98a30;padding:6px 26px;font-size:clamp(1.1rem,4vw,1.9rem);font-weight:800}
+.banner{width:fit-content;max-width:100%;margin:14px auto;text-align:center;background:linear-gradient(#3d8be0,#1f5fb4);color:#fff;border:4px solid #bfe0ff;border-radius:30px;box-shadow:0 5px 0 #14306b;padding:6px 40px;font-size:clamp(1rem,3.6vw,1.7rem);font-weight:800;text-shadow:0 2px 0 #14306b}
+.trio{display:grid;grid-template-columns:1fr 1.1fr 1fr;gap:16px;align-items:center;margin-top:20px}
+.panel{background:var(--card);border:5px solid var(--edge);border-radius:26px;box-shadow:0 7px 0 var(--shade);padding:16px 20px}
+.panel h2{margin:0 0 6px;font-size:1.7rem;font-weight:800;color:var(--ink)}
+.panel p{margin:6px 0;font-size:1.05rem;color:var(--ink)}
+.duo{position:relative;display:flex;justify-content:center;gap:4px}
+.duo svg{width:46%}
+.vs{grid-column:1/-1;text-align:center;margin-top:6px;background:linear-gradient(#2f6fb5,#245a99);color:#fff;border:4px solid #a8d4ff;border-radius:26px;padding:6px 20px;font-size:1.6rem;font-weight:800;text-shadow:0 2px 0 #14306b}
+.center{text-align:center}
+.ready{background:var(--card);border:6px solid #ffd86a;border-radius:30px;box-shadow:0 7px 0 #c98a30;padding:18px 28px;max-width:560px;margin:26px auto}
+.ready h2{text-align:center;margin:0 0 10px;font-size:1.8rem;font-weight:800;color:var(--ink)}
+.ready label{display:block;color:var(--ink);margin-top:6px}
+.ready input,.ready select{width:100%;padding:12px 14px;border:4px solid #a9c8f0;border-radius:18px;background:#fff;color:#14306b;margin:4px 0 8px;font-weight:700}
+.go{width:100%;font-size:1.7rem;font-weight:800;padding:12px;border-radius:24px;border:5px solid #d6f7b8;margin-top:6px;box-shadow:0 6px 0 #2b7a2a}
+.go:active{transform:translateY(3px);box-shadow:0 3px 0 #2b7a2a}
+.small{text-align:center;font-size:.95rem;color:var(--ink2);margin:8px 0 0}
+.track{margin:16px 0;border:7px solid var(--edge);border-radius:30px;box-shadow:0 7px 0 var(--shade);overflow:hidden;background:var(--card)}
+.sky{height:84px;background:linear-gradient(#5db3ff,#bfe6ff);position:relative}
+.sky svg{position:absolute;bottom:0;left:0;width:100%;height:70px}
+.road{position:relative;height:150px;background:#506080;border-top:9px solid #e0645f;border-bottom:9px solid #e0645f}
+.road:before{content:"";position:absolute;left:0;right:0;top:50%;border-top:5px dashed #c5cde0}
+.grass{height:26px;background:#6bb86a}
+.fin{position:absolute;top:0;bottom:0;left:86%;width:20px;background:repeating-conic-gradient(#14203a 0 25%,#fff 0 50%) 0 0/20px 20px}
+.tamat{position:absolute;top:6px;left:calc(86% + 28px);color:#fff;font-size:1.1rem;font-weight:800;text-shadow:0 2px 0 #000}
+.car{position:absolute;width:clamp(70px,15vw,110px);left:6px;transition:left .8s cubic-bezier(.3,1.35,.5,1);filter:drop-shadow(0 6px 3px rgba(0,0,0,.35))}
+.car.c{top:8px}.car.p{bottom:8px}
+.car svg{display:block;width:100%;height:auto}
+.q{background:var(--card);border:6px solid var(--edge);border-radius:30px;box-shadow:0 7px 0 var(--shade);padding:16px 20px 20px;max-width:760px;margin:0 auto}
+.q .tag{text-align:center;color:var(--ink);font-size:1.1rem}
+.pic{text-align:center;font-size:clamp(2.2rem,10vw,3.8rem);line-height:1.2;margin:10px auto 0;background:#fff;border-radius:22px;padding:8px 16px;width:fit-content;max-width:100%;box-shadow:inset 0 0 0 4px #cfe6ff;letter-spacing:.06em}.sent{text-align:center;color:var(--ink);font-weight:800;font-size:clamp(1.7rem,6.4vw,3rem);line-height:1.2;margin:16px 0 20px}
+.blank{display:inline-block;min-width:3.2em;border-bottom:6px solid #e0645f;color:#e0645f}
+.opts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.ans{font-size:clamp(1.05rem,4.2vw,2.2rem);font-weight:800;padding:18px 4px;border-radius:24px;border:5px solid #fff;box-shadow:0 7px 0 rgba(0,0,0,.28);text-shadow:0 3px 0 rgba(0,0,0,.25)}
+.ans:active{transform:translateY(4px);box-shadow:0 3px 0 rgba(0,0,0,.28)}
+.ans.r{background:linear-gradient(#ff6b6b,#d93d3d)}.ans.b{background:linear-gradient(#5aa9ff,#2a6fd8)}
+.ans.g{background:linear-gradient(#7fe05a,#34a83a)}.ans.ok{outline:6px solid #3fd16a;outline-offset:3px}.ans.no{opacity:.45}
+.fb{min-height:3.4em;text-align:center;color:var(--ink);font-size:1.15rem;margin:12px 0 0}
+.cert{background:#fffdf2;color:#7a3c00;border:9px double #e0a63a;border-radius:24px;text-align:center;padding:22px;max-width:640px;margin:16px auto;box-shadow:0 7px 0 var(--shade)}
+.cert h2{margin:6px 0;font-size:2rem;font-weight:800}
+.cert .name{display:inline-block;min-width:60%;font-size:2.2rem;font-weight:800;color:#1e4f8f;border-bottom:4px solid #7a3c00}
+.cert p{margin:8px 0}
+.row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+.tbl{overflow-x:auto}
+table{width:100%;border-collapse:collapse;color:var(--ink);font-size:.95rem}
+th,td{padding:6px 8px;border-bottom:2px solid var(--edge);text-align:left}
+@media (max-width:760px){.trio{grid-template-columns:1fr}.duo{order:-1}}
+@media (prefers-reduced-motion:reduce){.car{transition:none}}
+#cert img{display:block;width:100%;max-width:720px;margin:16px auto;border-radius:18px;box-shadow:0 7px 0 var(--shade)}
+@page{size:A4 landscape;margin:0}@media print{html,body{background:#fff!important;min-height:0!important;height:auto!important}.scene,.bar,#home,#game,#dash,#pw,#end>:not(#cert){display:none!important}main{padding:0;max-width:none;margin:0}#cert{display:block;width:297mm;height:210mm;margin:0;overflow:hidden}#cert img{display:block;width:297mm;height:210mm;max-width:none;margin:0;border-radius:0;box-shadow:none}}
+html{-webkit-text-size-adjust:100%}
+body{min-height:100vh;min-height:100dvh}
+button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.tools{display:flex;gap:12px;flex-wrap:wrap}
+#pw{position:fixed;inset:0;z-index:20;display:grid;place-items:center;padding:16px;background:rgba(10,22,51,.65)}#pw .ready{margin:0;width:100%;max-width:360px}
+@media (max-width:760px){.center{order:-2}.vs{order:-1}}
+@media (max-width:600px){
+main{padding:10px}
+.bar{gap:8px}
+.badge{font-size:.95rem}
+.badge i{width:36px;height:36px;font-size:1.15rem}
+.pill{border-width:3px;padding:4px 12px;font-size:.95rem;box-shadow:0 4px 0 var(--shade)}
+.tools{width:100%;gap:8px}
+.tools .btn{flex:1 1 0;padding:8px 6px;font-size:.9rem;white-space:nowrap}
+.btn{border-width:3px;box-shadow:0 4px 0 var(--shade)}
+h1{margin:12px 0 4px}
+h1 .a,h1 .b{-webkit-text-stroke-width:2px}
+.banner{padding:6px 18px;border-width:3px}
+.sub{padding:5px 16px;border-width:3px}
+.trio{gap:12px;margin-top:14px}
+.panel{border-width:4px;border-radius:22px;padding:12px 16px;box-shadow:0 5px 0 var(--shade)}
+.panel h2{font-size:1.4rem}
+.panel p{font-size:1rem}
+.vs{font-size:1.25rem;padding:4px 14px;border-width:3px}
+.ready{border-width:5px;border-radius:24px;padding:14px 16px;margin:20px auto}
+.ready h2{font-size:1.45rem}
+.go{font-size:1.4rem;padding:10px;border-width:4px}
+#game .bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#game .pill{display:block;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.track{margin:12px 0;border-width:5px;border-radius:24px;box-shadow:0 5px 0 var(--shade)}
+.sky{height:44px}.sky svg{height:38px}
+.road{height:112px}
+.grass{height:16px}
+.tamat{writing-mode:vertical-rl;left:calc(86% + 22px);top:4px;font-size:.75rem}
+.q{border-width:5px;border-radius:24px;padding:12px 12px 16px;box-shadow:0 5px 0 var(--shade)}
+.q .tag{font-size:1rem}
+.pic{font-size:clamp(2rem,10vw,2.6rem);padding:6px 12px;margin-top:8px}
+.sent{font-size:clamp(1.15rem,5.2vw,1.5rem);line-height:1.25;margin:12px 0 14px}
+.opts{gap:8px}
+.ans{font-size:clamp(.95rem,4.2vw,1.2rem);padding:14px 2px;border-width:4px;border-radius:18px;box-shadow:0 5px 0 rgba(0,0,0,.28);min-width:0;overflow-wrap:anywhere}
+.fb{font-size:1rem;min-height:3.2em;margin-top:10px}
+.row{gap:10px}
+.row .btn{flex:1 1 40%}
+.tbl{padding:6px 12px}
+.tbl table,.tbl tbody{display:block}
+.tbl thead{display:none}
+.tbl tr{display:block;padding:6px 0;border-bottom:2px dashed var(--ink2)}
+.tbl tr:last-child{border-bottom:0}
+.tbl td{display:flex;justify-content:space-between;gap:12px;border:0;padding:2px 2px}
+.tbl td:before{content:attr(data-label);color:var(--ink2)}
+.tbl td:first-child{font-size:1.05rem}
+.tbl td[colspan]:before{content:none}
+}
+@media (max-width:340px){.opts{grid-template-columns:1fr}}
+@media (max-height:480px) and (orientation:landscape){
+.sky{height:36px}.sky svg{height:32px}.road{height:110px}.grass{height:12px}.track{margin:10px 0}
+.car{width:76px}
+.sent{font-size:1.4rem;margin:8px 0 10px}.pic{font-size:2.2rem;margin-top:6px}.ans{padding:10px 4px}
+}
+</style>
+</head>
+<body>
+<div class="scene" aria-hidden="true">
+  <span class="cl" style="top:7%;left:6%"></span><span class="cl" style="top:15%;left:60%;transform:scale(.8)"></span><span class="cl" style="top:4%;left:80%;transform:scale(.6)"></span>
+  <svg viewBox="0 0 1000 400" preserveAspectRatio="none"><path d="M0 220 Q150 60 330 190 T640 150 T1000 120 V400 H0Z" fill="var(--hill1)"/><path d="M0 300 Q200 170 420 280 T800 240 T1000 260 V400 H0Z" fill="var(--hill2)"/></svg>
+  <i class="flag l"></i><i class="flag r"></i>
+</div>
+<main>
+<div class="bar">
+  <span class="pill badge"><i>📘</i>BAHASA MELAYU TAHUN 3</span>
+  <span class="tools"><button class="btn pink" id="mbtn" aria-pressed="false">🎵 Pasang Muzik</button><button class="btn blue" id="dbtn">📊 Dashboard Guru</button></span>
+</div>
+
+<section id="home">
+  <h1><span class="a">LUMBA</span> <span class="b">KERETA</span></h1>
+  <span class="sub">PENJODOH BILANGAN TAHUN 3</span>
+  <div class="banner">⭐ JOM JAWAB, JOM BERLUMBA! ⭐</div>
+  <div class="trio">
+    <div class="panel">
+      <h2>🏁 20 SOALAN!</h2>
+      <p>✍️ 20 Soalan bergambar</p><p>🔢 Orang, ekor, buah, biji…</p>
+      <p>🏆 Murid lawan komputer</p><p>🎵 Muzik &amp; bunyi ceria</p><p>🎓 Sijil bertema kereta</p>
+    </div>
+    <div class="center"><div class="duo" id="duo"></div></div>
+    <div class="panel">
+      <h2>🏆 JADI JUARA!</h2>
+      <p>🌟 Jawab soalan dengan betul</p><p>💨 Kereta memecut</p><p>🤖 Komputer turut berlumba</p><p>🎉 Raikan kemenangan</p>
+    </div>
+    <div class="vs">MURID 🆚 KOMPUTER</div>
+  </div>
+  <div class="panel" style="max-width:560px;margin:22px auto 0;text-align:center">
+    <p><b>Penjodoh bilangan</b> diletakkan selepas kata bilangan.<br>Contoh: dua <b>ekor</b> kucing, tiga <b>batang</b> pensel.</p>
+  </div>
+  <div class="ready">
+    <h2>🏎️ Sedia untuk berlumba?</h2>
+    <input id="nm" maxlength="40" autocomplete="off" placeholder="Nama murid" aria-label="Nama murid">
+    <input id="kl" maxlength="15" autocomplete="off" placeholder="Kelas (contoh: 3 Amanah)" aria-label="Kelas">
+    <label for="col" class="center">Warna kereta saya</label>
+    <select id="col"><option value="#e5484d">🔴 Merah</option><option value="#3b82e6">🔵 Biru</option><option value="#4cc15a">🟢 Hijau</option><option value="#f06aa8">🩷 Merah Jambu</option></select>
+    <button class="go green" id="start">▶ MULA BERLUMBA!</button>
+    <p class="small">20 soalan • 3 pilihan jawapan • Sijil selepas tamat</p>
+  </div>
+</section>
+
+<section id="game" class="hide">
+  <div class="bar"><span class="pill" id="pn">🏎️</span><span class="pill" id="qn">Soalan 1/20</span><span class="pill" id="tm">⏱️ 0:00</span><span class="pill" id="sc">⭐ 0</span></div>
+  <div class="track" aria-label="Litar perlumbaan">
+    <div class="sky"><svg viewBox="0 0 1000 70" preserveAspectRatio="none"><path d="M0 40 Q120 0 260 30 T520 25 T800 20 T1000 30 V70 H0Z" fill="var(--hill1)"/></svg></div>
+    <div class="road" id="road"><i class="fin"></i><span class="tamat">🏁 TAMAT</span><div class="car c" id="ccar"></div><div class="car p" id="pcar"></div></div>
+    <div class="grass"></div>
+  </div>
+  <div class="q">
+    <div class="tag" id="tag"></div><div class="pic" id="pic" role="img"></div>
+    <div class="sent" id="sent"></div>
+    <div class="opts" id="opts"></div>
+    <p class="fb" id="fb" aria-live="polite"></p>
+  </div>
+</section>
+
+<section id="end" class="hide">
+  <h1 style="font-size:clamp(2rem,8vw,3.6rem)"><span class="a" id="res">🏆 TAHNIAH!</span></h1>
+  <p class="sub" id="sum"></p>
+  <div id="cert"><img id="certimg" alt="Sijil penyertaan"></div>
+  <p class="small" id="msg"></p>
+  <div class="row"><button class="btn green hide" id="save">🎓 Simpan Sijil</button><button class="btn pink" id="print">🖨️ Cetak</button><button class="btn blue" id="again">🔁 Main Semula</button></div>
+</section>
+
+<section id="dash" class="hide">
+  <h1 style="font-size:clamp(2rem,8vw,3.4rem)"><span class="b">📊 REKOD LUMBA KERETA</span></h1>
+  <p class="sub" id="dnote" style="font-size:1rem"></p>
+  <div class="panel tbl"><table><thead><tr><th>Nama</th><th>Kelas</th><th>Tarikh</th><th>Markah</th><th>Masa</th><th>Keputusan</th></tr></thead><tbody id="rows"></tbody></table></div>
+  <div class="row"><button class="btn pink" id="rfs">🔄 Muat Semula</button><button class="btn green" id="csv">⬇️ Eksport CSV</button><button class="btn blue" id="back">🏠 Halaman Utama</button></div>
+</section>
+</main>
+<div id="pw" class="hide" role="dialog" aria-modal="true" aria-labelledby="pwt"><div class="ready"><h2 id="pwt">🔒 Dashboard Guru</h2><label for="pwi">Masukkan kata laluan</label><input id="pwi" type="password" inputmode="numeric" autocomplete="off" maxlength="20"><p class="small" id="pwe" role="alert" style="color:#e0453f;min-height:1.4em;margin:0 0 8px"></p><div class="row" style="margin:0"><button class="btn green" id="pwok">Masuk</button><button class="btn blue" id="pwno">Batal</button></div></div></div>
+
+<script>
+(function(){
+/* TAMPAL URL Web App Google Apps Script di antara tanda petik (lihat Code.gs). Kosong = rekod peranti ini sahaja. */
+var API="https://script.google.com/macros/s/AKfycbz7ePN4MrJeA43EIx2KotWDc_ecJir9H4UomalCo4wsRwxyM-0CgieeKh0rMxxxFMI/exec";
+var E=function(e,n){var a=[];for(var i=0;i<n;i++)a.push(e);return a.join(" ")};
+var DUR='<svg viewBox="0 0 64 64" width="1.1em" height="1.1em" style="vertical-align:middle" aria-hidden="true"><ellipse cx="32" cy="34" rx="20" ry="23" fill="#a3c04a" stroke="#5b7a1e" stroke-width="6" stroke-dasharray="2.5 3.5"/><ellipse cx="32" cy="34" rx="20" ry="23" fill="#a3c04a"/><path d="M32 6v7" stroke="#6b4a1e" stroke-width="4" stroke-linecap="round"/></svg>';
+var D=[
+{s:"Siew Ling memakai ___ cincin emas.",e:"💍",l:2,a:"sebentuk",o:["sebuah","sebentuk","seketul"]},
+{s:"Bapa Amira membeli ___ durian di gerai buah-buahan.",e:DUR,l:1,a:"sebiji",o:["sebiji","seulas","setongkol"]},
+{s:"Kakak memakai ___ kasut sukan baharu yang dibelinya semalam.",e:"👟 👟",l:2,a:"sepasang",o:["seutas","sepasang","sekeping"]},
+{s:"Ibu membeli ___ pisang yang ranum untuk dibuat kuih.",e:"🍌",l:2,a:"seikat",o:["seikat","sebiji","sebilah"]},
+{s:"Pak Cik Samad memelihara lima ___ lembu di dalam kandang yang bersih.",e:E("🐄",5),l:1,a:"ekor",o:["ekor","helai","biji"]},
+{s:"Lili membawa ___ payung.",e:"☂️",l:2,a:"sekaki",o:["sekaki","sebilah","seketul"]},
+{s:"Ali memetik ___ bunga ros yang cantik di taman bunga nenek.",e:"🌹",l:2,a:"sekuntum",o:["seekor","sekuntum","sebiji"]},
+{s:"Ayah memotong daging menggunakan ___ pisau.",e:"🔪",l:1,a:"sebilah",o:["seulas","sebilah","sebuah"]},
+{s:"Bapa Ah Chong membeli ___ kereta berwarna biru.",e:"🚙",l:1,a:"sebuah",o:["seekor","sebuah","seketul"]},
+{s:"Nenek membeli ___ pisang di pasar.",e:"🍌",l:2,a:"sesisir",o:["sekaki","sesisir","seekor"]},
+{s:"Nabila menyusun beberapa ___ buku cerita di atas rak buku di bilik bacaan.",e:"📕 📗 📘",l:2,a:"buah",o:["buah","biji","helai"]},
+{s:"Ayah membaca se___ surat khabar sambil meminum kopi di ruang tamu.",e:"📰",l:2,a:"naskah",o:["pucuk","naskah","bentuk"]},
+{s:"Dua ___ guru berada di dalam kelas.",e:"👩‍🏫 👨‍🏫",l:1,a:"orang",o:["orang","ekor","buah"]},
+{s:"Kakak membeli tiga ___ pensel.",e:E("✏️",3),l:1,a:"batang",o:["batang","helai","ekor"]},
+{s:"Adik makan tiga ___ epal.",e:E("🍎",3),l:1,a:"biji",o:["biji","ekor","orang"]},
+{s:"Aminah makan dua ___ roti semasa sarapan.",e:E("🍞",2),l:1,a:"keping",o:["keping","ekor","batang"]},
+{s:"Ibu menjemur lima ___ baju.",e:E("👕",5),l:2,a:"helai",o:["helai","batang","ekor"]},
+{s:"Nenek menulis dua ___ surat.",e:E("✉️",2),l:2,a:"pucuk",o:["pucuk","batang","kaki"]},
+{s:"Ibu menjahit dengan dua ___ benang.",e:E("🧵",2),l:2,a:"utas",o:["utas","ekor","orang"]},
+{s:"Adik makan dua ___ kek.",e:E("🍰",2),l:2,a:"potong",o:["potong","batang","orang"]}];
+var HINT={sebentuk:"bentuk untuk cincin.",sebiji:"biji untuk buah-buahan yang bulat seperti durian dan epal.",sepasang:"pasang untuk benda yang berpasangan, seperti kasut dan cermin mata.",seikat:"ikat untuk benda yang diikat, seperti pisang dan sayur.",ekor:"ekor untuk haiwan.",sekaki:"kaki untuk payung.",sekuntum:"kuntum untuk bunga.",sebilah:"bilah untuk benda yang tajam seperti pisau.",sebuah:"buah untuk benda besar seperti kereta dan rumah.",sesisir:"sisir untuk pisang.",buah:"buah untuk benda besar seperti buku, rumah dan kereta.",naskah:"naskah untuk surat khabar dan majalah.",orang:"orang untuk manusia.",batang:"batang untuk benda panjang dan keras seperti pensel.",biji:"biji untuk buah-buahan yang bulat seperti epal.",keping:"keping untuk benda nipis dan rata seperti roti.",helai:"helai untuk benda nipis dan lebar seperti kain dan kertas.",pucuk:"pucuk untuk surat.",utas:"utas untuk benda panjang dan lentur seperti tali dan benang.",potong:"potong untuk makanan yang dipotong, seperti kek."};
+var $=function(i){return document.getElementById(i)};
+var S=["home","game","end","dash"];
+function show(n){if(n!=="dash")unlocked=false;S.forEach(function(s){$(s).classList.toggle("hide",s!==n)});window.scrollTo(0,0)}
+function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+function car(c){return '<svg viewBox="0 0 120 58" aria-hidden="true"><path d="M6 38 Q6 28 18 26 L34 24 Q44 6 64 6 L84 6 Q96 8 102 24 L110 28 Q117 31 117 40 L117 44 L6 44Z" fill="'+c+'"/><path d="M42 24 Q49 11 64 11 L71 11 L71 24Z" fill="#cfefff"/><path d="M75 11 L84 11 Q91 13 95 24 L75 24Z" fill="#cfefff"/><rect x="30" y="33" width="42" height="4" rx="2" fill="#fff" opacity=".65"/><circle cx="32" cy="46" r="10" fill="#1b1b24"/><circle cx="32" cy="46" r="4" fill="#ddd"/><circle cx="92" cy="46" r="10" fill="#1b1b24"/><circle cx="92" cy="46" r="4" fill="#ddd"/><rect x="109" y="31" width="8" height="6" rx="3" fill="#ffe66d"/></svg>'}
+var pc="#e5484d",cc="#3b82e6";
+$("duo").innerHTML=car("#e5484d")+car("#3b82e6");
+var Q=[],qi=0,score=0,pp=0,cp=0,t0=0,tmr=null,lock=false,ctx=null,mus=false,mi=null;
+
+function beep(f,d,ty){try{ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();var o=ctx.createOscillator(),g=ctx.createGain();o.type=ty||"sine";o.frequency.value=f;g.gain.value=.08;o.connect(g);g.connect(ctx.destination);o.start();g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+d);o.stop(ctx.currentTime+d)}catch(e){}}
+var notes=[523,659,784,659,587,698,880,698],ni=0;
+$("mbtn").onclick=function(){mus=!mus;this.setAttribute("aria-pressed",mus);this.textContent=mus?"🔇 Matikan Muzik":"🎵 Pasang Muzik";clearInterval(mi);if(mus)mi=setInterval(function(){beep(notes[ni++%8],.25,"triangle")},320)};
+$("col").onchange=function(){$("duo").innerHTML=car(this.value)+car(this.value==="#3b82e6"?"#f59e0b":"#3b82e6")};
+
+function place(){var W=$("road").clientWidth,cw=$("pcar").offsetWidth||90,mx=W*.86-cw+14;
+  $("pcar").style.left=(6+pp/100*mx)+"px";$("ccar").style.left=(6+cp/100*mx)+"px"}
+function fmt(s){return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
+
+$("start").onclick=function(){
+  var n=$("nm").value.trim();
+  if(!n){$("nm").focus();$("nm").placeholder="Sila taip nama dahulu";return}
+  pc=$("col").value;cc=pc==="#3b82e6"?"#f59e0b":"#3b82e6";
+  $("pcar").innerHTML=car(pc);$("ccar").innerHTML=car(cc);
+  Q=shuf(D.filter(function(x){return x.l===1})).concat(shuf(D.filter(function(x){return x.l===2})));qi=0;score=0;pp=0;cp=0;t0=Date.now();
+  $("pn").textContent="🏎️ "+n;$("tm").textContent="⏱️ 0:00";
+  show("game");$("pcar").style.left="6px";$("ccar").style.left="6px";ask();
+  clearInterval(tmr);tmr=setInterval(function(){$("tm").textContent="⏱️ "+fmt(Math.floor((Date.now()-t0)/1000))},500);
+};
+
+function ask(){
+  lock=false;if(qi>0)window.scrollTo(0,0);var q=Q[qi];
+  $("qn").textContent="Soalan "+(qi+1)+"/20";$("sc").textContent="⭐ "+score;$("fb").textContent="";
+  $("tag").textContent=q.l===1?"🌟 LITAR MUDAH":"⭐ LITAR SEDERHANA";$("pic").innerHTML=q.e;$("pic").setAttribute("aria-label","Gambar bagi soalan ini");
+  $("sent").innerHTML=q.s.replace("___",'<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>');
+  $("opts").innerHTML="";
+  shuf(q.o).forEach(function(w,i){var b=document.createElement("button");b.className="ans "+["r","b","g"][i];b.textContent=w;b.onclick=function(){pick(b,w)};$("opts").appendChild(b)});
+}
+function pick(b,w){
+  if(lock)return;lock=true;var q=Q[qi],ok=w===q.a;
+  [].forEach.call($("opts").children,function(x){if(x.textContent===q.a)x.classList.add("ok");else x.classList.add("no")});
+  if(ok){score++;pp+=5;beep(880,.2);beep(1320,.3);$("fb").textContent="✅ Betul! Kereta memecut!"}
+  else{beep(200,.4,"sawtooth");$("fb").textContent="❌ Jawapan yang betul ialah “"+q.a+"”. Ingat: "+HINT[q.a];try{$("fb").scrollIntoView({block:"nearest"})}catch(e){}}
+  cp+=5*(.6+Math.random()*.3);place();$("sc").textContent="⭐ "+score;
+  setTimeout(function(){qi++;if(qi<20)ask();else finish()},ok?950:2400);
+}
+function finish(){
+  clearInterval(tmr);var sec=Math.floor((Date.now()-t0)/1000),win=pp>=cp;
+  $("res").textContent=win?"🏆 TAHNIAH, JUARA!":"🏁 TAHNIAH!";
+  $("sum").textContent="Markah "+score+"/20 • Masa "+fmt(sec)+" • "+(win?"Kamu mengalahkan komputer!":"Komputer menang kali ini. Cuba lagi!");
+  var n=$("nm").value.trim(),k=$("kl").value.trim(),d=new Date().toLocaleDateString("ms-MY");
+  drawCert(n,k,d);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){drawCert(n,k,d)});
+  var rec={id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),n:n,k:k,d:d,m:score,t:fmt(sec),h:win?"Menang":"Kalah"};
+  var r=load();r.push(rec);
+  try{localStorage.setItem("lkkp",JSON.stringify(r))}catch(e){}
+  if(API){var q=qload();q.push(rec);qsave(q);flush()}
+  show("end");[523,659,784,1047].forEach(function(f,i){setTimeout(function(){beep(f,.3)},i*180)});
+}
+function load(){try{return JSON.parse(localStorage.getItem("lkkp")||"[]")}catch(e){return[]}}
+$("again").onclick=function(){show("home")};
+$("print").onclick=function(){$("msg").textContent="Jika tetingkap cetak tidak dibuka, gunakan Simpan Sijil atau tangkap skrin sijil.";try{window.print()}catch(e){}};
+var dl=null;try{if(window.claude&&window.claude.use)window.claude.use("downloads").then(function(d){dl=d;if(d)$("save").classList.remove("hide")}).catch(function(){})}catch(e){}
+$("save").onclick=function(){if(!dl)return;cv.toBlob(function(b){if(!b){$("msg").textContent="Sijil tidak dapat disimpan. Sila tangkap skrin sijil.";return}dl.save({filename:"sijil-penjodoh-bilangan.png",data:b}).then(function(){$("msg").textContent="Sijil sudah disimpan. ✅"}).catch(function(e){$("msg").textContent=(e&&e.code==="declined")?"Simpanan dibatalkan.":"Sijil tidak dapat disimpan. Sila tangkap skrin sijil."})},"image/png")};
+var cv=document.createElement("canvas");cv.width=1200;cv.height=849;
+function drawCert(n,k,d){var c=cv.getContext("2d"),W=1200,H=849,F='"Baloo 2","Trebuchet MS",sans-serif';
+ c.fillStyle="#fffdf2";c.fillRect(0,0,W,H);
+ c.strokeStyle="#e0a63a";c.lineWidth=14;c.strokeRect(30,30,W-60,H-60);c.lineWidth=4;c.strokeRect(54,54,W-108,H-108);
+ c.textAlign="center";c.fillStyle="#7a3c00";
+ c.font="64px "+F;c.fillText("🏎️ 🏁 🚙",W/2,150);
+ c.font="800 76px "+F;c.fillText("SIJIL PENYERTAAN",W/2,250);
+ c.font="700 34px "+F;c.fillText("Lumba Kereta Penjodoh Bilangan • Bahasa Melayu Tahun 3",W/2,310);
+ c.fillText("Dengan sukacitanya dianugerahkan kepada",W/2,380);
+ var fs=88;c.fillStyle="#1e4f8f";do{c.font="800 "+fs+"px "+F;fs-=4}while(c.measureText(n).width>W-260&&fs>28);
+ c.fillText(n,W/2,490);
+ c.strokeStyle="#7a3c00";c.lineWidth=4;c.beginPath();c.moveTo(220,515);c.lineTo(W-220,515);c.stroke();
+ c.fillStyle="#7a3c00";c.font="700 38px "+F;c.fillText((k?"Kelas "+k+" • ":"")+"Markah "+score+"/20 • "+d,W/2,590);
+ c.fillText("kerana telah menamatkan 20 cabaran penjodoh bilangan.",W/2,660);
+ c.font="64px "+F;c.fillText("🏆",W/2,765);
+ $("certimg").src=cv.toDataURL("image/png")}
+$("back").onclick=function(){show("home")};
+var PW="1234",unlocked=false,key="",view=[],LB=["Nama","Kelas","Tarikh","Markah","Masa","Keputusan"];
+function qload(){try{return JSON.parse(localStorage.getItem("lkkq")||"[]")}catch(e){return[]}}
+function qsave(a){try{localStorage.setItem("lkkq",JSON.stringify(a))}catch(e){}}
+function flush(){if(!API||!window.fetch)return;var q=qload();if(!q.length)return;qsave([]);
+  q.forEach(function(x){fetch(API,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(x)}).catch(function(){var a=qload();a.push(x);qsave(a)})})}
+function openPw(){$("pwe").textContent="";$("pwi").value="";$("pw").classList.remove("hide");$("pwi").focus()}
+function closePw(){$("pw").classList.add("hide")}
+function soft(m){$("dnote").textContent=m}
+function renderDash(list){
+  view=list;var bd=$("rows");bd.innerHTML="";
+  if(!list.length){var tr=document.createElement("tr"),td=document.createElement("td");td.colSpan=6;td.textContent="Belum ada rekod. Selesaikan satu permainan dahulu.";tr.appendChild(td);bd.appendChild(tr)}
+  list.forEach(function(x){var tr=document.createElement("tr");[x.n,x.k,x.d,x.m+"/20",x.t,x.h].forEach(function(v,i){var td=document.createElement("td");td.setAttribute("data-label",LB[i]);td.textContent=v;tr.appendChild(td)});bd.appendChild(tr)});
+  show("dash");unlocked=true;
+}
+function loadDash(k,fail){
+  var note=API?"Semua rekod murid (dikumpul di Google Sheets)":"Rekod hanya dari peranti ini. Murid yang main di peranti lain tidak dipaparkan di sini.";
+  if(!API){key=k;$("dnote").textContent=note;renderDash(load().slice().reverse());return}
+  fetch(API+(API.indexOf("?")<0?"?":"&")+"k="+encodeURIComponent(k)).then(function(r){return r.json()}).then(function(j){
+    if(!j||!j.ok){fail("Kata laluan salah. Cuba lagi.");return}
+    key=k;closePw();$("dnote").textContent=note;renderDash(j.rows.slice().reverse())
+  }).catch(function(){fail("Tidak dapat sambung ke Google Sheets. Semak internet.")})
+}
+$("dbtn").onclick=function(){if(unlocked)loadDash(key,soft);else openPw()};
+$("rfs").onclick=function(){$("dnote").textContent="Memuatkan…";loadDash(key,soft)};
+$("pwno").onclick=closePw;
+$("pwok").onclick=function(){var v=$("pwi").value;
+  function bad(m){$("pwe").textContent=m;$("pwi").value="";$("pwi").focus()}
+  if(API){$("pwe").textContent="Menyemak…";loadDash(v,bad)}
+  else if(v===PW){closePw();loadDash(v)}
+  else bad("Kata laluan salah. Cuba lagi.")};
+$("pwi").onkeydown=function(e){if(e.key==="Enter")$("pwok").click();else if(e.key==="Escape")closePw()};
+$("csv").onclick=function(){
+  var c="Nama,Kelas,Tarikh,Markah,Masa,Keputusan\n"+view.map(function(x){return[x.n,x.k,x.d,x.m,x.t,x.h].map(function(v){return'"'+String(v).replace(/"/g,'""')+'"'}).join(",")}).join("\n");
+  try{var a=document.createElement("a");a.href="data:text/csv;charset=utf-8,"+encodeURIComponent("\ufeff"+c);a.download="rekod-lumba-kereta.csv";a.click()}catch(e){}
+};
+window.addEventListener("resize",place);
+window.addEventListener("online",flush);flush();
+})();
+</script>
+</body>
+</html>
